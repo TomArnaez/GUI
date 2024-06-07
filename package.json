@@ -26,6 +26,21 @@
       7
     ]
   },
+  "build": {
+    "win": {
+      "extraFiles": [
+        {
+          "from": "native/dependencies/bin",
+          "to": ".",
+          "filter": ["**/*.dll"]
+        },
+        {
+          "from": "native/shaders",
+          "to": "shaders"
+        }
+      ]
+    }
+  },
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.0",
     "@electron-toolkit/utils": "^3.0.0",

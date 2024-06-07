@@ -1,0 +1,3 @@
+C:/dev/repos/electron-app/build/CMakeFiles/native.dir
+C:/dev/repos/electron-app/build/CMakeFiles/ALL_BUILD.dir
+C:/dev/repos/electron-app/build/CMakeFiles/ZERO_CHECK.dir

@@ -4,30 +4,7 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import native from '../../build/Release/native.node'
 
-function resizeChildWindow(width: number, height: number): Promise<void> {
-  // Simulate an asynchronous operation
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      // Resize logic here
-      console.log(`Resizing to ${width}x${height}`)
-      resolve()
-    }, 1000) // Simulate delay
-  })
-}
-
-function busyWait() {
-  try {
-    const start = Date.now();
-    console.log("busy wait called")
-    while (Date.now() - start < 500) {
-      let x = 2
-      x += 3
-    }
-    console.log("busy wait finished")
-  } catch (err) {
-    console.log(err)
-  }
-}
+(global as any).nativeAddon
 
 function createWindow(): void {
   // Create the browser window.
@@ -45,12 +22,9 @@ function createWindow(): void {
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
-    native.startThread(mainWindow.getNativeWindowHandle().readUint32LE())
-  })
-
-  mainWindow.on('resize', async () => {
-    console.log("resizing");
-    native.resizeChildWindow(500, 500);
+    global.nativeAddon = new native.GPUApplication(
+      mainWindow.getNativeWindowHandle().readUint32LE()
+    )
   })
 
   mainWindow.webContents.setWindowOpenHandler((details) => {

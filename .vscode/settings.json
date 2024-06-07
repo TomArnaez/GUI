@@ -91,6 +91,8 @@
     "variant": "cpp",
     "queue": "cpp",
     "condition_variable": "cpp",
-    "deque": "cpp"
+    "deque": "cpp",
+    "chrono": "cpp",
+    "forward_list": "cpp"
   }
 }
