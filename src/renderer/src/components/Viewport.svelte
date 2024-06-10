@@ -1,44 +1,118 @@
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte'
-  import { createEventDispatcher } from 'svelte'
-
-  export let width: number
-  export let height: number
-
-  let element: HTMLDivElement | null = null
-  const dispatch = createEventDispatcher()
-
-  function handleResize(entries: ResizeObserverEntry[]): void {
-    for (let entry of entries) {
-      width = entry.contentRect.width
-      height = entry.contentRect.height
-      dispatch('resize', { width, height })
-    }
-  }
-
-  function handleWheel(event: WheelEvent): void {
-    event.preventDefault()
-    if (event.deltaY > 0) {
-      width = Math.max(100, width - 10)
-      height = Math.max(100, height - 10)
-    } else {
-      width = Math.min(800, width + 10)
-      height = Math.min(800, height + 10)
-    }
-    if (element) {
-      element.style.width = `${width}px`
-      element.style.height = `${height}px`
-    }
-  }
-
+  import type { ROI } from '../../../types'
+  export let panFactor = 1.5
+  export let zoomFactor = 0.1
   let resizeObserver: ResizeObserver | null = null
+  let element: HTMLDivElement | null = null
+  let roi: ROI | null = null
+  let imageSize: ROI | null = null
+  let isPanning = false
+  let startX = 0
+  let startY = 0
 
-  onMount(() => {
+  async function handleResize(entries: ResizeObserverEntry[]): Promise<void> {
+    for (let entry of entries) {
+      const width = entry.contentRect.width
+      const height = entry.contentRect.height
+      console.log(`Width: ${width}, Height: ${height}`)
+      const result = await window.electron.ipcRenderer.invoke('GetROI')
+      console.log(result.width)
+    }
+  }
+
+  function handleMouseDown(event: MouseEvent): void {
+    if (event.ctrlKey) {
+      isPanning = true
+      startX = event.clientX
+      startY = event.clientY
+      event.preventDefault()
+    }
+  }
+
+  async function handleMouseMove(event: MouseEvent): Promise<void> {
+    if (isPanning && roi && imageSize) {
+      const deltaX = event.clientX - startX
+      const deltaY = event.clientY - startY
+
+      let newRoi = {
+        ...roi,
+        x: roi.x - deltaX * panFactor,
+        y: roi.y - deltaY * panFactor
+      }
+
+      console.log(newRoi)
+      newRoi.x = Math.max(0, Math.min(newRoi.x, imageSize.width - roi.width))
+      newRoi.y = Math.max(0, Math.min(newRoi.y, imageSize.height - roi.height))
+
+      roi = newRoi
+
+      startX = event.clientX
+      startY = event.clientY
+
+      await window.electron.ipcRenderer.invoke('SetROI', roi)
+    }
+  }
+
+  function handleMouseUp(): void {
+    if (isPanning) {
+      isPanning = false
+    }
+  }
+
+  async function handleWheel(event: WheelEvent): Promise<void> {
+    if (!roi || !imageSize) return
+    event.preventDefault()
+
+    const { deltaY } = event
+
+    let newWidth = roi.width
+    let newHeight = roi.height
+
+    if (deltaY < 0) {
+      // Zooming in
+      newWidth -= roi.width * zoomFactor
+      newHeight -= roi.height * zoomFactor
+    } else {
+      // Zooming out
+      newWidth += roi.width * zoomFactor
+      newHeight += roi.height * zoomFactor
+    }
+
+    const roiCenterX = roi.x + roi.width / 2
+    const roiCenterY = roi.y + roi.height / 2
+
+    let newRoi = {
+      x: roiCenterX - newWidth / 2,
+      y: roiCenterY - newHeight / 2,
+      width: newWidth,
+      height: newHeight
+    }
+
+    // Boundary checks
+    newRoi.width = Math.max(1, Math.min(newRoi.width, imageSize.width))
+    newRoi.height = Math.max(1, Math.min(newRoi.height, imageSize.height))
+    newRoi.x = Math.max(0, Math.min(newRoi.x, imageSize.width - newRoi.width))
+    newRoi.y = Math.max(0, Math.min(newRoi.y, imageSize.height - newRoi.height))
+
+    roi = newRoi
+
+    await window.electron.ipcRenderer.invoke('SetROI', roi)
+  }
+
+  onMount(async () => {
     resizeObserver = new ResizeObserver(handleResize)
     if (element) {
       resizeObserver.observe(element)
       element.addEventListener('wheel', handleWheel, { passive: false })
+      element.addEventListener('mousedown', handleMouseDown)
+      element.addEventListener('mousemove', handleMouseMove)
+      element.addEventListener('mouseup', handleMouseUp)
     }
+    await window.electron.ipcRenderer.invoke('StartStream')
+    roi = await window.electron.ipcRenderer.invoke('GetROI')
+    imageSize = await window.electron.ipcRenderer.invoke('GetImageSize')
+    console.log(imageSize)
   })
 
   onDestroy(() => {
@@ -47,24 +121,19 @@
     }
     if (element) {
       element.removeEventListener('wheel', handleWheel)
+      element.removeEventListener('mousedown', handleMouseDown)
+      element.removeEventListener('mousemove', handleMouseMove)
+      element.removeEventListener('mouseup', handleMouseUp)
     }
   })
 </script>
 
-<div bind:this={element} class="resizable-element" style="width: {width}px; height: {height}px;">
-  <p>Resize me with the mouse wheel</p>
-  <p>Current width: {width}px</p>
-  <p>Current height: {height}px</p>
-</div>
+<div bind:this={element} class="resizable-element" />
 
 <style>
   .resizable-element {
-    border: 1px solid #ccc;
-    padding: 10px;
+    width: 90vw;
+    height: 90vh;
     overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box;
   }
 </style>

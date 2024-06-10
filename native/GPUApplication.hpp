@@ -1,17 +1,11 @@
 #include <napi.h>
 #include <Windows.h>
+
 #include "VBCore.h"
 #include "VBErrorCodes.h"
 
-struct MainWindowContext {
-    HWND child_window = nullptr;
-    WNDPROC original_proc = nullptr;
-    vb::VBCore* core = nullptr;
-};
-
-struct GPUViewportWindowContext {
-    vb::VBCore* core = nullptr;
-};
+struct MainWindowContext;
+struct GPUViewportWindowContext;
 
 class GPUApplication : public Napi::ObjectWrap<GPUApplication> {
     HWND main_window;
@@ -28,8 +22,12 @@ public:
 
     Napi::Value InitDetector(const Napi::CallbackInfo& info);
     Napi::Value InitRenderer(const Napi::CallbackInfo& info);
+    Napi::Value ConfigureStream(const Napi::CallbackInfo& info);
     Napi::Value StartStream(const Napi::CallbackInfo& info);
     Napi::Value StopStream(const Napi::CallbackInfo& info);
+    Napi::Value GetROI(const Napi::CallbackInfo& info);
+    Napi::Value SetROI(const Napi::CallbackInfo& info);
+    Napi::Value GetImageSize(const Napi::CallbackInfo& info);
 
     Napi::Value SetHistogramEqualisation(const Napi::CallbackInfo& info);
     Napi::Value SetDarkCorrection(const Napi::CallbackInfo& info);

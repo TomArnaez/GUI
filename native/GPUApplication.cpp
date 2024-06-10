@@ -1,6 +1,34 @@
 #include "GPUApplication.hpp"
 #include <iostream>
 
+vb::ROI JSObjectToROI(const Napi::Object& obj) {
+    vb::ROI roi;
+    roi.x = obj.Get("x").As<Napi::Number>().Int32Value();
+    roi.y = obj.Get("y").As<Napi::Number>().Int32Value();
+    roi.width = obj.Get("width").As<Napi::Number>().Int32Value();
+    roi.height = obj.Get("height").As<Napi::Number>().Int32Value();
+    return roi;
+}
+
+Napi::Object ROIToJSObject(const Napi::Env& env, const vb::ROI& roi) {
+    Napi::Object obj = Napi::Object::New(env);
+    obj.Set("x", Napi::Number::New(env, roi.x));
+    obj.Set("y", Napi::Number::New(env, roi.y));
+    obj.Set("width", Napi::Number::New(env, roi.width));
+    obj.Set("height", Napi::Number::New(env, roi.height));
+    return obj;
+}
+
+struct MainWindowContext {
+    HWND child_window = nullptr;
+    WNDPROC original_proc = nullptr;
+    vb::VBCore* core = nullptr;
+};
+
+struct GPUViewportWindowContext {
+    vb::VBCore* core = nullptr;
+};
+
 LRESULT CALLBACK GPUViewportWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     auto context = reinterpret_cast<GPUViewportWindowContext*>(GetProp(hwnd, L"GPUViewportWindowContext"));
 
@@ -52,13 +80,16 @@ void RegisterWindowClass(std::wstring& window_class_name)
 Napi::Object GPUApplication::Init(Napi::Env env, Napi::Object exports) {
     Napi::Function func = DefineClass(env, "GPUApplication", {
         GPUApplication::InstanceMethod("InitDetector", &GPUApplication::InitDetector),
-        GPUApplication::InstanceMethod("InitRenderer", &GPUApplication::InitRenderer)
+        GPUApplication::InstanceMethod("InitRenderer", &GPUApplication::InitRenderer),
+        GPUApplication::InstanceMethod("StartStream", &GPUApplication::StartStream),
+        GPUApplication::InstanceMethod("GetROI", &GPUApplication::GetROI),
+        GPUApplication::InstanceMethod("SetROI", &GPUApplication::SetROI),
+        GPUApplication::InstanceMethod("GetImageSize", &GPUApplication::GetImageSize)
     });
 
     Napi::FunctionReference* constructor = new Napi::FunctionReference();
     *constructor = Napi::Persistent(func);
     exports.Set("GPUApplication", func);
-    
 
     env.SetInstanceData<Napi::FunctionReference>(constructor);
     return exports;
@@ -107,36 +138,62 @@ GPUApplication::GPUApplication(const Napi::CallbackInfo& info) : Napi::ObjectWra
 
     SetProp(main_window, L"Context", reinterpret_cast<HANDLE>(main_window_context.get()));
     SetProp(gpu_viewport_window, L"GPUViewportWindowContext", reinterpret_cast<HANDLE>(gpu_viewport_window_context.get()));
-
-    try {
-        std::cout << core->InitDetector() << std::endl;
-        std::cout << core->InitRender(static_cast<void*>(gpu_viewport_window)) << std::endl;
-        std::cout << core->ConfigureStream(1670) << std::endl;
-        std::cout << core->StartStream() << std::endl;
-    } catch(std::exception& ex) {
-        std::cout << ex.what() << std::endl;
-    }
 }
 
 Napi::Value GPUApplication::InitDetector(const Napi::CallbackInfo& info) {
     Napi::Env env = info.Env();
     Napi::HandleScope scope(env);
 
-    return Napi::String::New(env, "InitDetector called");
+    return Napi::Number::New(env, core->InitDetector());
 }
 
 Napi::Value GPUApplication::InitRenderer(const Napi::CallbackInfo& info) {
     Napi::Env env = info.Env();
     Napi::HandleScope scope(env);
 
-    return Napi::String::New(env, "InitRenderer called");
+    return Napi::Number::New(env, core->InitRender(static_cast<void*>(gpu_viewport_window)));
+}
+
+Napi::Value GPUApplication::ConfigureStream(const Napi::CallbackInfo& info) {
+    Napi::Env env = info.Env();
+
+    if (info.Length() != 1 || !info[0].IsNumber()) {
+        Napi::TypeError::New(env, "Expected a single number parameter").ThrowAsJavaScriptException();
+        return env.Null();
+    }
+
+    return Napi::Number::New(env, core->ConfigureStream(info[0].ToNumber()));
 }
 
 Napi::Value GPUApplication::StartStream(const Napi::CallbackInfo& info) {
     Napi::Env env = info.Env();
-
-    return env.Undefined();
+    core->ConfigureStream(1670);
+    return Napi::Number::New(env, core->StartStream());
 };
+
+Napi::Value GPUApplication::GetROI(const Napi::CallbackInfo& info) {
+    return ROIToJSObject(info.Env(), core->GetROI());
+}
+
+Napi::Value GPUApplication::SetROI(const Napi::CallbackInfo& info) {
+    Napi::Env env = info.Env();
+
+    if (info.Length() != 1 || !info[0].IsObject()) {
+        Napi::TypeError::New(env, "Expected an object").ThrowAsJavaScriptException();
+        return env.Null();
+    }
+
+    Napi::Object obj = info[0].As<Napi::Object>();
+    vb::ROI roi = JSObjectToROI(obj);
+
+    return Napi::Number::New(env, core->SetROI(roi));
+}
+
+Napi::Value GPUApplication::GetImageSize(const Napi::CallbackInfo& info) {
+    Napi::Env env = info.Env();
+
+    return ROIToJSObject(info.Env(), core->GetImageSize());
+}
 
 Napi::Value GPUApplication::SetHistogramEqualisation(const Napi::CallbackInfo& info) {
     Napi::Env env = info.Env();

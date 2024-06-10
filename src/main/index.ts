@@ -1,10 +1,11 @@
 import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
+import type { ROI } from '../types'
 import icon from '../../resources/icon.png?asset'
 import native from '../../build/Release/native.node'
 
-(global as any).nativeAddon
+(global as any).gpuApplication
 
 function createWindow(): void {
   // Create the browser window.
@@ -22,9 +23,6 @@ function createWindow(): void {
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
-    global.nativeAddon = new native.GPUApplication(
-      mainWindow.getNativeWindowHandle().readUint32LE()
-    )
   })
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
@@ -56,9 +54,33 @@ app.whenReady().then(() => {
   })
 
   // IPC test
-  ipcMain.on('ping', () => console.log('pong'))
+  ipcMain.handle('getMainWindow', () => {
+    return BrowserWindow.getAllWindows()[0].getNativeWindowHandle().readUint32LE()
+  })
 
   createWindow()
+
+  global.gpuApplication = new native.GPUApplication(
+    BrowserWindow.getAllWindows()[0].getNativeWindowHandle().readUint32LE()
+  )
+
+  ipcMain.handle('StartStream', () => {
+    console.log(global.gpuApplication.InitDetector())
+    console.log(global.gpuApplication.InitRenderer())
+    console.log(global.gpuApplication.StartStream())
+  })
+
+  ipcMain.handle('GetROI', () => {
+    return global.gpuApplication.GetROI()
+  })
+
+  ipcMain.handle('SetROI', (_event, roi: ROI) => {
+    return global.gpuApplication.SetROI(roi)
+  })
+
+  ipcMain.handle('GetImageSize', () => {
+    return global.gpuApplication.GetImageSize()
+  })
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
