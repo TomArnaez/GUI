@@ -149,10 +149,8 @@ Napi::Value GPUApplication::SetWindowPosition(const Napi::CallbackInfo& info) {
         return env.Null();
     }
 
-    std::cout << "Start move" << std::endl;
     vb::ROI roi = JSObjectToROI(info[0].As<Napi::Object>());
     MoveWindow(gpu_viewport_window, roi.x, roi.y, roi.width, roi.height, false);
-    std::cout << "Finish move" << std::endl;
 }
 
 Napi::Value GPUApplication::InitDetector(const Napi::CallbackInfo& info) {
