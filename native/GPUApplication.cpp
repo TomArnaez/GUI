@@ -51,13 +51,13 @@ LRESULT CALLBACK SubclassProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPa
     auto* context = reinterpret_cast<MainWindowContext*>(GetProp(hwnd, L"Context"));
 
     switch (message) {
-        case WM_SIZE:
-            if (context && context->child_window) {
-                RECT rect;
-                GetClientRect(hwnd, &rect);
-                MoveWindow(context->child_window, 0, 0, rect.right / 2, rect.bottom / 2, false);
-            }
-            return 0;
+        // case WM_SIZE:
+        //     if (context && context->child_window) {
+        //         RECT rect;
+        //         GetClientRect(hwnd, &rect);
+        //         MoveWindow(context->child_window, 0, 0, rect.right / 2, rect.bottom / 2, false);
+        //     }
+        //     return 0;
     }
     return CallWindowProc(context->original_proc, hwnd, message, wParam, lParam);
 }
@@ -84,7 +84,8 @@ Napi::Object GPUApplication::Init(Napi::Env env, Napi::Object exports) {
         GPUApplication::InstanceMethod("StartStream", &GPUApplication::StartStream),
         GPUApplication::InstanceMethod("GetROI", &GPUApplication::GetROI),
         GPUApplication::InstanceMethod("SetROI", &GPUApplication::SetROI),
-        GPUApplication::InstanceMethod("GetImageSize", &GPUApplication::GetImageSize)
+        GPUApplication::InstanceMethod("GetImageSize", &GPUApplication::GetImageSize),
+        GPUApplication::InstanceMethod("SetWindowPosition", &GPUApplication::SetWindowPosition)
     });
 
     Napi::FunctionReference* constructor = new Napi::FunctionReference();
@@ -140,16 +141,28 @@ GPUApplication::GPUApplication(const Napi::CallbackInfo& info) : Napi::ObjectWra
     SetProp(gpu_viewport_window, L"GPUViewportWindowContext", reinterpret_cast<HANDLE>(gpu_viewport_window_context.get()));
 }
 
+Napi::Value GPUApplication::SetWindowPosition(const Napi::CallbackInfo& info) {
+    Napi::Env env = info.Env();
+
+    if (info.Length() != 1 || !info[0].IsObject()) {
+        Napi::TypeError::New(env, "Expected an object").ThrowAsJavaScriptException();
+        return env.Null();
+    }
+
+    std::cout << "Start move" << std::endl;
+    vb::ROI roi = JSObjectToROI(info[0].As<Napi::Object>());
+    MoveWindow(gpu_viewport_window, roi.x, roi.y, roi.width, roi.height, false);
+    std::cout << "Finish move" << std::endl;
+}
+
 Napi::Value GPUApplication::InitDetector(const Napi::CallbackInfo& info) {
     Napi::Env env = info.Env();
-    Napi::HandleScope scope(env);
 
     return Napi::Number::New(env, core->InitDetector());
 }
 
 Napi::Value GPUApplication::InitRenderer(const Napi::CallbackInfo& info) {
     Napi::Env env = info.Env();
-    Napi::HandleScope scope(env);
 
     return Napi::Number::New(env, core->InitRender(static_cast<void*>(gpu_viewport_window)));
 }

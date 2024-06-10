@@ -20,6 +20,8 @@ public:
     static Napi::Object Init(Napi::Env env, Napi::Object exports);
     GPUApplication(const Napi::CallbackInfo& info);
 
+    Napi::Value SetWindowPosition(const Napi::CallbackInfo& info);
+
     Napi::Value InitDetector(const Napi::CallbackInfo& info);
     Napi::Value InitRenderer(const Napi::CallbackInfo& info);
     Napi::Value ConfigureStream(const Napi::CallbackInfo& info);

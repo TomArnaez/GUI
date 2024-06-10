@@ -10,14 +10,24 @@
   let isPanning = false
   let startX = 0
   let startY = 0
+  let loaded = false
 
   async function handleResize(entries: ResizeObserverEntry[]): Promise<void> {
     for (let entry of entries) {
-      const width = entry.contentRect.width
-      const height = entry.contentRect.height
-      console.log(`Width: ${width}, Height: ${height}`)
-      const result = await window.electron.ipcRenderer.invoke('GetROI')
-      console.log(result.width)
+      // Get the position relative to the browser window
+      const { top, left, width, height } = entry.target.getBoundingClientRect()
+      console.log(
+        `Relative to browser window - Top: ${top}, Left: ${left}, Width: ${width}, Height: ${height}`
+      )
+
+      let posRoi: ROI = {
+        x: left,
+        y: top,
+        width: width,
+        height: height
+      }
+
+      if (loaded) await window.electron.ipcRenderer.invoke('SetWindowPosition', posRoi)
     }
   }
 
@@ -41,7 +51,6 @@
         y: roi.y - deltaY * panFactor
       }
 
-      console.log(newRoi)
       newRoi.x = Math.max(0, Math.min(newRoi.x, imageSize.width - roi.width))
       newRoi.y = Math.max(0, Math.min(newRoi.y, imageSize.height - roi.height))
 
@@ -112,7 +121,7 @@
     await window.electron.ipcRenderer.invoke('StartStream')
     roi = await window.electron.ipcRenderer.invoke('GetROI')
     imageSize = await window.electron.ipcRenderer.invoke('GetImageSize')
-    console.log(imageSize)
+    loaded = true
   })
 
   onDestroy(() => {
@@ -132,8 +141,8 @@
 
 <style>
   .resizable-element {
-    width: 90vw;
-    height: 90vh;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
   }
 </style>

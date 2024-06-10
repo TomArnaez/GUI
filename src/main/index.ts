@@ -82,6 +82,10 @@ app.whenReady().then(() => {
     return global.gpuApplication.GetImageSize()
   })
 
+  ipcMain.handle('SetWindowPosition', (_event, roi: ROI) => {
+    return global.gpuApplication.SetWindowPosition(roi)
+  })
+
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.

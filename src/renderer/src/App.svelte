@@ -2,4 +2,6 @@
   import Viewport from './components/Viewport.svelte'
 </script>
 
-<Viewport />
+<div style="width: 50%; height: 50%">
+  <Viewport />
+</div>
