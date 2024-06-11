@@ -1,0 +1,10 @@
+^C:\DEV\REPOS\GUI\GPU_VIEWPORT\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/dev/repos/GUI/gpu_viewport -BC:/dev/repos/GUI/gpu_viewport/build --check-stamp-file C:/dev/repos/GUI/gpu_viewport/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

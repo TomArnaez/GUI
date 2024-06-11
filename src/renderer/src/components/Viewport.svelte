@@ -1,33 +1,28 @@
-<script lang="ts">
+<!-- <script lang="ts">
   import { onMount, onDestroy } from 'svelte'
-  import type { ROI } from '../../../types'
+  import { type ROI } from 'gpu_viewport/lib/gpu_viewport'
+
   export let panFactor = 1.5
   export let zoomFactor = 0.1
+
   let resizeObserver: ResizeObserver | null = null
   let element: HTMLDivElement | null = null
   let roi: ROI | null = null
   let imageSize: ROI | null = null
   let isPanning = false
-  let startX = 0
-  let startY = 0
-  let loaded = false
+  let startX: number | null = null
+  let startY: number | null = null
 
   async function handleResize(entries: ResizeObserverEntry[]): Promise<void> {
     for (let entry of entries) {
-      // Get the position relative to the browser window
       const { top, left, width, height } = entry.target.getBoundingClientRect()
-      console.log(
-        `Relative to browser window - Top: ${top}, Left: ${left}, Width: ${width}, Height: ${height}`
-      )
-
       let posRoi: ROI = {
         x: left,
         y: top,
         width: width,
         height: height
       }
-
-      if (loaded) await window.electron.ipcRenderer.invoke('SetWindowPosition', posRoi)
+      await window.electron.ipcRenderer.invoke('SetWindowPosition', posRoi)
     }
   }
 
@@ -66,6 +61,8 @@
   function handleMouseUp(): void {
     if (isPanning) {
       isPanning = false
+      startX = null
+      startY = null
     }
   }
 
@@ -121,13 +118,10 @@
     await window.electron.ipcRenderer.invoke('StartStream')
     roi = await window.electron.ipcRenderer.invoke('GetROI')
     imageSize = await window.electron.ipcRenderer.invoke('GetImageSize')
-    loaded = true
   })
 
   onDestroy(() => {
-    if (resizeObserver) {
-      resizeObserver.disconnect()
-    }
+    if (resizeObserver) resizeObserver.disconnect()
     if (element) {
       element.removeEventListener('wheel', handleWheel)
       element.removeEventListener('mousedown', handleMouseDown)
@@ -145,4 +139,4 @@
     height: 100%;
     overflow: hidden;
   }
-</style>
+</style> -->

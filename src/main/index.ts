@@ -1,11 +1,10 @@
 import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
-import type { ROI } from '../types'
 import icon from '../../resources/icon.png?asset'
-import native from '../../build/Release/native.node'
+import { GPUViewport, ROI } from 'gpu_viewport'
 
-(global as any).gpuApplication
+let gpuViewport: GPUViewport
 
 function createWindow(): void {
   // Create the browser window.
@@ -17,7 +16,9 @@ function createWindow(): void {
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
-      sandbox: false
+      sandbox: false,
+      nodeIntegration: true,
+      contextIsolation: false
     }
   })
 
@@ -60,30 +61,30 @@ app.whenReady().then(() => {
 
   createWindow()
 
-  global.gpuApplication = new native.GPUApplication(
+  gpuViewport = new GPUViewport(
     BrowserWindow.getAllWindows()[0].getNativeWindowHandle().readUint32LE()
   )
 
   ipcMain.handle('StartStream', () => {
-    console.log(global.gpuApplication.InitDetector())
-    console.log(global.gpuApplication.InitRenderer())
-    console.log(global.gpuApplication.StartStream())
+    console.log(gpuViewport.initDetector())
+    console.log(gpuViewport.initRenderer())
+    console.log(gpuViewport.startStream())
   })
 
   ipcMain.handle('GetROI', () => {
-    return global.gpuApplication.GetROI()
+    return gpuViewport.getROI()
   })
 
   ipcMain.handle('SetROI', (_event, roi: ROI) => {
-    return global.gpuApplication.SetROI(roi)
+    return gpuViewport.setROI(roi)
   })
 
   ipcMain.handle('GetImageSize', () => {
-    return global.gpuApplication.GetImageSize()
+    return gpuViewport.getImageSize()
   })
 
   ipcMain.handle('SetWindowPosition', (_event, roi: ROI) => {
-    return global.gpuApplication.SetWindowPosition(roi)
+    return gpuViewport.setWindowPosition(roi)
   })
 
   app.on('activate', function () {

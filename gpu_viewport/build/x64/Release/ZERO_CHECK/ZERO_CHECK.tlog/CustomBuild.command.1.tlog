@@ -1,0 +1,10 @@
+^C:\DEV\REPOS\GUI\GPU_VIEWPORT\BUILD\CMAKEFILES\4A0032D71DCD88AB9D66E4592E024650\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/dev/repos/GUI/gpu_viewport -BC:/dev/repos/GUI/gpu_viewport/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/dev/repos/GUI/gpu_viewport/build/gpu_viewport.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

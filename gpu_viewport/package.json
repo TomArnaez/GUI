@@ -1,0 +1,33 @@
+{
+  "name": "gpu_viewport",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "cmake-js compile"
+  },
+  "files": [
+    "build/",
+    "dependencies/",
+    "lib/*.js",
+    "lib/*.d.ts",
+    "src/"
+  ],
+  "binary": {
+    "napi_versions": [
+      7
+    ]
+  },
+  "dependencies": {
+    "@electron-toolkit/preload": "^3.0.0",
+    "@electron-toolkit/utils": "^3.0.0",
+    "bindings": "^1.5.0",
+    "cmake-js": "^7.3.0",
+    "node-addon-api": "^8.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  },
+  "main": "./lib/gpu_viewport",
+  "types": "./lib/gpu_viewport.d.ts",
+  "keywords": []
+}

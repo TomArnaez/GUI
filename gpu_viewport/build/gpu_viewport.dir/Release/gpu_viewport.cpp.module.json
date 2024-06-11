@@ -1,0 +1,13 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "gpu_viewport.dir\\Release\\gpu_viewport.obj",
+            "outputs": [
+                "gpu_viewport.dir\\Release\\"
+            ],
+            "requires": []
+        }
+    ]
+}
