@@ -30,9 +30,4 @@ public:
     Napi::Value GetROI(const Napi::CallbackInfo& info);
     Napi::Value SetROI(const Napi::CallbackInfo& info);
     Napi::Value GetImageSize(const Napi::CallbackInfo& info);
-
-    Napi::Value SetHistogramEqualisation(const Napi::CallbackInfo& info);
-    Napi::Value SetDarkCorrection(const Napi::CallbackInfo& info);
-    Napi::Value SetGainCorrection(const Napi::CallbackInfo& info);
-    Napi::Value SetDefectCorrection(const Napi::CallbackInfo& info);
 };
