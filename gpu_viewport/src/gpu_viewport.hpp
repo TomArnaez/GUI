@@ -8,15 +8,17 @@ struct gpu_viewport_window_context;
 
 class gpu_viewport : public Napi::ObjectWrap<gpu_viewport> {
     HWND main_window;
-    
     HWND gpu_viewport_window;
+    
     std::unique_ptr<gpu_viewport_window_context> gpu_viewport_window_ctx;
     std::wstring gpu_window_class_name = L"GPUViewportWindow";
 
-    std::shared_ptr<vb::VBCore> core;
+    vb::VBCore* core;
 public:
     static Napi::Object Init(Napi::Env env, Napi::Object exports);
     gpu_viewport(const Napi::CallbackInfo& info);
+
+    Napi::Value Cleanup(const Napi::CallbackInfo& info);
 
     Napi::Value SetWindowPosition(const Napi::CallbackInfo& info);
 

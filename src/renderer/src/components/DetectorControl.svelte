@@ -1,8 +1,13 @@
-<script>
+<script lang="ts">
+  import { ipcRenderer } from 'electron'
+
+  async function startStream(): Promise<void> {
+    await ipcRenderer.invoke('startStream')
+  }
 </script>
 
 <div class="vertical-buttons">
-  <button>Start Stream</button>
+  <button on:click={startStream}>Start Stream</button>
 </div>
 
 <style>

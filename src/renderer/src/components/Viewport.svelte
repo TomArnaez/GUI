@@ -1,6 +1,12 @@
-<!-- <script lang="ts">
+<script lang="ts">
   import { onMount, onDestroy } from 'svelte'
-  import { type ROI } from 'gpu_viewport/lib/gpu_viewport'
+
+  type ROI = {
+    x: number
+    y: number
+    width: number
+    height: number
+  }
 
   export let panFactor = 1.5
   export let zoomFactor = 0.1
@@ -115,7 +121,6 @@
       element.addEventListener('mousemove', handleMouseMove)
       element.addEventListener('mouseup', handleMouseUp)
     }
-    await window.electron.ipcRenderer.invoke('StartStream')
     roi = await window.electron.ipcRenderer.invoke('GetROI')
     imageSize = await window.electron.ipcRenderer.invoke('GetImageSize')
   })
@@ -139,4 +144,4 @@
     height: 100%;
     overflow: hidden;
   }
-</style> -->
+</style>

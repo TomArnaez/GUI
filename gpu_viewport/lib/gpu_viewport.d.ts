@@ -20,4 +20,5 @@ export class GPUViewport {
   public setDarkCorrection(darkMapPath: string): number
   public setGainCorrection(defectMapPath: string): number
   public setDefectCorrection(defectMapPath: string): number
+  public cleanup(): null
 }

@@ -22,22 +22,30 @@ Napi::Object ROIToJSObject(const Napi::Env& env, const vb::ROI& roi) {
 }
 
 struct gpu_viewport_window_context {
-    std::weak_ptr<vb::VBCore> core;
+    vb::VBCore* core;
 };
 
 LRESULT CALLBACK gpu_viewport_window_proc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     auto context = reinterpret_cast<gpu_viewport_window_context*>(GetProp(hwnd, L"gpu_viewport_window_ctx"));
 
     switch (uMsg) {
+    case WM_DESTROY: {
+        if (context && context->core) delete context->core;
+        PostQuitMessage(0);
+        return 0;
+    }
+    case WM_PAINT: {
+        return 0;
+    }
     case WM_GPU_VIEWPORT_RESIZE: {
         vb::ROI* roi = (vb::ROI*)(lParam);
         SetWindowPos(hwnd, NULL, roi->x, roi->y, roi->width, roi->height, SWP_NOZORDER);
-        if (context) {
-            auto core = context->core.lock();
-            if (core) core->Refresh();
-        }
+        if (context && context->core) context->core->Refresh();
         return 0;
     }
+    case WM_CLOSE:
+        DestroyWindow(hwnd);
+        return 0;
     }
 
     return DefWindowProc(hwnd, uMsg, wParam, lParam);
@@ -63,17 +71,15 @@ Napi::Object gpu_viewport::Init(Napi::Env env, Napi::Object exports) {
         gpu_viewport::InstanceMethod("initDetector", &gpu_viewport::InitDetector),
         gpu_viewport::InstanceMethod("initRenderer", &gpu_viewport::InitRenderer),
         gpu_viewport::InstanceMethod("startStream", &gpu_viewport::StartStream),
+        gpu_viewport::InstanceMethod("stopStream", &gpu_viewport::StopStream),
         gpu_viewport::InstanceMethod("getROI", &gpu_viewport::GetROI),
         gpu_viewport::InstanceMethod("setROI", &gpu_viewport::SetROI),
         gpu_viewport::InstanceMethod("getImageSize", &gpu_viewport::GetImageSize),
-        gpu_viewport::InstanceMethod("setWindowPosition", &gpu_viewport::SetWindowPosition)
+        gpu_viewport::InstanceMethod("setWindowPosition", &gpu_viewport::SetWindowPosition),
+        gpu_viewport::InstanceMethod("cleanup", &gpu_viewport::Cleanup)
     });
 
-    Napi::FunctionReference* constructor = new Napi::FunctionReference();
-    *constructor = Napi::Persistent(func);
     exports.Set("GPUViewport", func);
-
-    env.SetInstanceData<Napi::FunctionReference>(constructor);
     return exports;
 }
 
@@ -106,7 +112,13 @@ gpu_viewport::gpu_viewport(const Napi::CallbackInfo& info) : Napi::ObjectWrap<gp
 
     SetParent(gpu_viewport_window, main_window);
 
-    core = std::make_shared<vb::VBCore>();
+    // vb::CoreCreateInfo core_create_info {
+    //     .file = vb::LogLevel::Trace,
+    //     .console = vb::LogLevel::Trace,
+    //     .filepath = "log.txt"
+    // };
+
+    core = new vb::VBCore();
 
     SetLayeredWindowAttributes(gpu_viewport_window, 0, 255, LWA_ALPHA);
     SetWindowPos(gpu_viewport_window, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
@@ -115,6 +127,13 @@ gpu_viewport::gpu_viewport(const Napi::CallbackInfo& info) : Napi::ObjectWrap<gp
     gpu_viewport_window_ctx->core = core;
 
     SetProp(gpu_viewport_window, L"gpu_viewport_window_ctx", static_cast<HANDLE>(gpu_viewport_window_ctx.get()));
+}
+
+Napi::Value gpu_viewport::Cleanup(const Napi::CallbackInfo& info) {
+    Napi::Env env = info.Env();
+
+    core->StopStream();
+    return env.Null();
 }
 
 Napi::Value gpu_viewport::SetWindowPosition(const Napi::CallbackInfo& info) {
@@ -138,6 +157,14 @@ Napi::Value gpu_viewport::InitDetector(const Napi::CallbackInfo& info) {
 
 Napi::Value gpu_viewport::InitRenderer(const Napi::CallbackInfo& info) {
     Napi::Env env = info.Env();
+
+    // vb::RenderCreateInfo render_create_info {
+    //     .window_handle = static_cast<void*>(gpu_viewport_window),
+    //     .shader_path = nullptr,
+    //     .dark_map_path = nullptr,
+    //     .gain_map_path = nullptr,
+    //     .defect_map_path = nullptr
+    // };
 
     return Napi::Number::New(env, core->InitRender(static_cast<void*>(gpu_viewport_window)));
 }

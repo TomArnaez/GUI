@@ -219,7 +219,7 @@ NODE_ARCH:UNINITIALIZED=x64
 NODE_RUNTIME:UNINITIALIZED=node
 
 //No help, variable specified on the command line.
-NODE_RUNTIMEVERSION:UNINITIALIZED=20.10.0
+NODE_RUNTIMEVERSION:UNINITIALIZED=20.9.0
 
 //Path to a library.
 VBCORE_LIB:FILEPATH=C:/dev/repos/GUI/gpu_viewport/dependencies/lib/VBCore.lib
@@ -247,7 +247,7 @@ CMAKE_CACHE_MAJOR_VERSION:INTERNAL=3
 //Minor version of cmake used to create the current loaded cache
 CMAKE_CACHE_MINOR_VERSION:INTERNAL=29
 //Patch version of cmake used to create the current loaded cache
-CMAKE_CACHE_PATCH_VERSION:INTERNAL=2
+CMAKE_CACHE_PATCH_VERSION:INTERNAL=3
 //Path to CMake executable.
 CMAKE_COMMAND:INTERNAL=C:/Program Files/CMake/bin/cmake.exe
 //Path to cpack program executable.

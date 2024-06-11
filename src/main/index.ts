@@ -65,10 +65,15 @@ app.whenReady().then(() => {
     BrowserWindow.getAllWindows()[0].getNativeWindowHandle().readUint32LE()
   )
 
-  ipcMain.handle('StartStream', () => {
-    console.log(gpuViewport.initDetector())
-    console.log(gpuViewport.initRenderer())
+  console.log(gpuViewport.initDetector())
+  console.log(gpuViewport.initRenderer())
+
+  ipcMain.handle('startStream', () => {
     console.log(gpuViewport.startStream())
+  })
+
+  ipcMain.handle('stopStream', () => {
+    console.log(gpuViewport.stopStream())
   })
 
   ipcMain.handle('GetROI', () => {
@@ -99,6 +104,7 @@ app.whenReady().then(() => {
 // explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
+    gpuViewport.cleanup()
     app.quit()
   }
 })
