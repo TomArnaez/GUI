@@ -158,15 +158,15 @@ Napi::Value gpu_viewport::InitDetector(const Napi::CallbackInfo& info) {
 Napi::Value gpu_viewport::InitRenderer(const Napi::CallbackInfo& info) {
     Napi::Env env = info.Env();
 
-    // vb::RenderCreateInfo render_create_info {
-    //     .window_handle = static_cast<void*>(gpu_viewport_window),
-    //     .shader_path = nullptr,
-    //     .dark_map_path = nullptr,
-    //     .gain_map_path = nullptr,
-    //     .defect_map_path = nullptr
-    // };
+    vb::RenderCreateInfo render_create_info {
+        .window_handle = static_cast<void*>(gpu_viewport_window),
+        .shader_path = nullptr,
+        .dark_map_path = nullptr,
+        .gain_map_path = nullptr,
+        .defect_map_path = nullptr
+    };
 
-    return Napi::Number::New(env, core->InitRender(static_cast<void*>(gpu_viewport_window)));
+    return Napi::Number::New(env, core->InitRender(render_create_info));
 }
 
 Napi::Value gpu_viewport::ConfigureStream(const Napi::CallbackInfo& info) {

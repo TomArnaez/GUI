@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include "VBErrorCodes.h"
+#include "VBTypes.h"
 
 #ifdef VBCORE_EXPORT
 #define VBCORE_API __declspec(dllexport)
@@ -8,30 +9,16 @@
 #define VBCORE_API __declspec(dllimport)
 #endif
 
-namespace vb
-{
-	struct ROI {
-		uint32_t x		= 0;
-		uint32_t y		= 0;
-		uint32_t width	= 0;
-		uint32_t height	= 0;
-
-		ROI() {}
-
-		ROI(uint32_t width, uint32_t height)
-			: width(width), height(height) {}
-
-		ROI(uint32_t x, uint32_t y, uint32_t width, uint32_t height)
-			: x(x), y(y), width(width), height(height) {}
-	};
-
+namespace vb {
 	class VBCore {
 	public:
 		VBCORE_API VBCore();
+		VBCORE_API VBCore(CoreCreateInfo create_info);
 		VBCORE_API ~VBCore() = default;
 
 		VBCORE_API int InitDetector();
-		VBCORE_API int InitRender(void* args);
+		VBCORE_API int InitDetectorProxy(uint32_t width, uint32_t height, uint16_t frames);
+		VBCORE_API int InitRender(RenderCreateInfo create_info);
 		VBCORE_API ROI GetImageSize();
 		VBCORE_API ROI GetROI();
 		VBCORE_API int SetROI(ROI roi);

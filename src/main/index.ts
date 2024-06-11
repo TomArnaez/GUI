@@ -65,15 +65,15 @@ app.whenReady().then(() => {
     BrowserWindow.getAllWindows()[0].getNativeWindowHandle().readUint32LE()
   )
 
-  console.log(gpuViewport.initDetector())
-  console.log(gpuViewport.initRenderer())
+  gpuViewport.initDetector()
+  gpuViewport.initRenderer()
 
   ipcMain.handle('startStream', () => {
-    console.log(gpuViewport.startStream())
+    return gpuViewport.startStream()
   })
 
   ipcMain.handle('stopStream', () => {
-    console.log(gpuViewport.stopStream())
+    return gpuViewport.stopStream()
   })
 
   ipcMain.handle('GetROI', () => {
