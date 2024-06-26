@@ -8,11 +8,18 @@
   async function stopStream(): Promise<void> {
     await ipcRenderer.invoke('stopStream')
   }
+
+  
+  async function toggleAveraging(): Promise<void> {
+    const averaging = await ipcRenderer.invoke("getAveraging");
+    await ipcRenderer
+  }
 </script>
 
 <div class="vertical-buttons">
   <button on:click={startStream}>Start Stream</button>
   <button on:click={stopStream}>Stop Stream</button>
+  <button on:click={toggleAveraging}>Toggle Averaging</button>
 </div>
 
 <style>

@@ -12,6 +12,8 @@ export class GPUViewport {
   public configureStream(expTime: number): number
   public startStream(): number
   public stopStream(): number
+  public setAveraging(enable: boolean): null
+  public getAveraging(): boolean
   public getROI(): ROI
   public setROI(roi: ROI): number
   public getImageSize(): ROI

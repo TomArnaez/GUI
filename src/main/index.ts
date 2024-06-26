@@ -76,6 +76,10 @@ app.whenReady().then(() => {
     return gpuViewport.stopStream()
   })
 
+  ipcMain.handle('getAveraging', () => {
+    return gpu
+  })
+
   ipcMain.handle('GetROI', () => {
     return gpuViewport.getROI()
   })

@@ -209,6 +209,44 @@ Napi::Value gpu_viewport::StopStream(const Napi::CallbackInfo &info)
     return env.Null();
 };
 
+Napi::Value gpu_viewport::SetAveraging(const Napi::CallbackInfo& info) {
+    Napi::Env env = info.Env();
+
+    if (info.Length() != 1 || !info[0].IsBoolean()) {
+        Napi::TypeError::New(env, "Expected a boolean").ThrowAsJavaScriptException();
+        return env.Null();
+    }
+
+    Napi::Boolean averaging = info[0].As<Napi::Boolean>();
+
+    auto locked_core = core.lock();
+    if (!locked_core) {
+        Napi::Error::New(env, "Failed to lock core").ThrowAsJavaScriptException();
+        return env.Null();
+    }
+
+    locked_core->SetAveraging(averaging.Value());
+    return env.Null();
+}
+
+Napi::Value gpu_viewport::GetAveraging(const Napi::CallbackInfo& info) {
+    Napi::Env env = info.Env();
+
+    if (info.Length() != 0 || !info[0].IsBoolean()) {
+        Napi::TypeError::New(env, "Unexpected parameters").ThrowAsJavaScriptException();
+        return env.Null();
+    }
+
+    auto locked_core = core.lock();
+    if (!locked_core) {
+        Napi::Error::New(env, "Failed to lock core").ThrowAsJavaScriptException();
+        return env.Null();
+    }
+
+    bool averaging = locked_core->GetAveraging();
+    return Napi::Boolean::New(env, averaging);
+}
+
 Napi::Value gpu_viewport::GetROI(const Napi::CallbackInfo& info) {
     Napi::Env env = info.Env();
 

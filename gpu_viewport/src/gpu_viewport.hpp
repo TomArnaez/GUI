@@ -26,6 +26,8 @@ public:
     Napi::Value ConfigureStream(const Napi::CallbackInfo& info);
     Napi::Value StartStream(const Napi::CallbackInfo& info);
     Napi::Value StopStream(const Napi::CallbackInfo& info);
+    Napi::Value SetAveraging(const Napi::CallbackInfo& info);
+    Napi::Value GetAveraging(const Napi::CallbackInfo& info);
     Napi::Value GetROI(const Napi::CallbackInfo& info);
     Napi::Value SetROI(const Napi::CallbackInfo& info);
     Napi::Value GetImageSize(const Napi::CallbackInfo& info);

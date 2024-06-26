@@ -28,6 +28,7 @@ namespace vb {
 		VBCORE_API err::error_enum StartStream();
 		VBCORE_API err::error_enum StopStream();
 		VBCORE_API void SetAveraging(bool enable);
+		VBCORE_API bool GetAveraging();
 		VBCORE_API void Refresh();
 		VBCORE_API bool Streaming() const;
 	private:
