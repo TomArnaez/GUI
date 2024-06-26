@@ -22,15 +22,15 @@ Napi::Object ROIToJSObject(const Napi::Env& env, const vb::ROI& roi) {
 }
 
 struct gpu_viewport_window_context {
-    vb::VBCore* core;
+    std::shared_ptr<vb::Core> core;
 };
 
-LRESULT CALLBACK gpu_viewport_window_proc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
-    auto context = reinterpret_cast<gpu_viewport_window_context*>(GetProp(hwnd, L"gpu_viewport_window_ctx"));
+LRESULT CALLBACK gpu_viewport_window_proc(HWND gpu_hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+    auto context = reinterpret_cast<gpu_viewport_window_context*>(GetProp(gpu_hwnd, L"gpu_viewport_window_ctx"));
 
     switch (uMsg) {
     case WM_DESTROY: {
-        if (context && context->core) delete context->core;
+        if (context && context->core) delete context;
         PostQuitMessage(0);
         return 0;
     }
@@ -39,16 +39,16 @@ LRESULT CALLBACK gpu_viewport_window_proc(HWND hwnd, UINT uMsg, WPARAM wParam, L
     }
     case WM_GPU_VIEWPORT_RESIZE: {
         vb::ROI* roi = (vb::ROI*)(lParam);
-        SetWindowPos(hwnd, NULL, roi->x, roi->y, roi->width, roi->height, SWP_NOZORDER);
+        SetWindowPos(gpu_hwnd, NULL, roi->x, roi->y, roi->width, roi->height, SWP_NOZORDER);
         if (context && context->core) context->core->Refresh();
         return 0;
     }
     case WM_CLOSE:
-        DestroyWindow(hwnd);
+        DestroyWindow(gpu_hwnd);
         return 0;
     }
 
-    return DefWindowProc(hwnd, uMsg, wParam, lParam);
+    return DefWindowProc(gpu_hwnd, uMsg, wParam, lParam);
 }
 
 void RegisterWindowClass(std::wstring& window_class_name)
@@ -112,19 +112,18 @@ gpu_viewport::gpu_viewport(const Napi::CallbackInfo& info) : Napi::ObjectWrap<gp
 
     SetParent(gpu_viewport_window, main_window);
 
-    // vb::CoreCreateInfo core_create_info {
-    //     .file = vb::LogLevel::Trace,
-    //     .console = vb::LogLevel::Trace,
-    //     .filepath = "log.txt"
-    // };
-
-    core = new vb::VBCore();
+    vb::CoreCreateInfo core_create_info {
+        .file = vb::LogLevel::Trace,
+        .console = vb::LogLevel::Trace,
+        .filepath = "log.txt"
+    };
 
     SetLayeredWindowAttributes(gpu_viewport_window, 0, 255, LWA_ALPHA);
     SetWindowPos(gpu_viewport_window, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
 
     gpu_viewport_window_ctx = std::make_unique<gpu_viewport_window_context>();
-    gpu_viewport_window_ctx->core = core;
+    gpu_viewport_window_ctx->core = std::make_shared<vb::Core>(vb::Core(core_create_info));
+    core = gpu_viewport_window_ctx->core;
 
     SetProp(gpu_viewport_window, L"gpu_viewport_window_ctx", static_cast<HANDLE>(gpu_viewport_window_ctx.get()));
 }
@@ -132,7 +131,9 @@ gpu_viewport::gpu_viewport(const Napi::CallbackInfo& info) : Napi::ObjectWrap<gp
 Napi::Value gpu_viewport::Cleanup(const Napi::CallbackInfo& info) {
     Napi::Env env = info.Env();
 
-    core->StopStream();
+    if (auto locked_core = core.lock()) 
+        locked_core->StopStream();
+
     return env.Null();
 }
 
@@ -146,13 +147,17 @@ Napi::Value gpu_viewport::SetWindowPosition(const Napi::CallbackInfo& info) {
 
     vb::ROI roi = JSObjectToROI(info[0].As<Napi::Object>());
     SendMessage(gpu_viewport_window, WM_GPU_VIEWPORT_RESIZE, 0, (LPARAM)&roi);
+
     return env.Null();
 }
 
 Napi::Value gpu_viewport::InitDetector(const Napi::CallbackInfo& info) {
     Napi::Env env = info.Env();
 
-    return Napi::Number::New(env, core->InitDetector());
+    if (auto locked_core = core.lock()) 
+        return Napi::Number::New(env, locked_core->InitDetector());
+
+    return env.Null();
 }
 
 Napi::Value gpu_viewport::InitRenderer(const Napi::CallbackInfo& info) {
@@ -160,13 +165,15 @@ Napi::Value gpu_viewport::InitRenderer(const Napi::CallbackInfo& info) {
 
     vb::RenderCreateInfo render_create_info {
         .window_handle = static_cast<void*>(gpu_viewport_window),
-        .shader_path = nullptr,
-        .dark_map_path = nullptr,
-        .gain_map_path = nullptr,
-        .defect_map_path = nullptr
+        .shader_path = "shaders/",
+        .dark_map_path = "C:/dev/data/active_detector/dark.tif",
+        .gain_map_path = "C:/dev/data/active_detector/gain.tif",
+        .defect_map_path = "C:/dev/data/active_detector/defect.tif"
     };
+    if (auto locked_core = core.lock()) 
+        return Napi::Number::New(env, locked_core->InitRender(render_create_info));
 
-    return Napi::Number::New(env, core->InitRender(render_create_info));
+    return env.Null();
 }
 
 Napi::Value gpu_viewport::ConfigureStream(const Napi::CallbackInfo& info) {
@@ -176,23 +183,39 @@ Napi::Value gpu_viewport::ConfigureStream(const Napi::CallbackInfo& info) {
         Napi::TypeError::New(env, "Expected a single number parameter").ThrowAsJavaScriptException();
         return env.Null();
     }
+    
+    if (auto locked_core = core.lock()) 
+        return Napi::Number::New(env, locked_core->ConfigureStream(info[0].ToNumber()));
 
-    return Napi::Number::New(env, core->ConfigureStream(info[0].ToNumber()));
+    return env.Null();
 }
 
 Napi::Value gpu_viewport::StartStream(const Napi::CallbackInfo& info) {
     Napi::Env env = info.Env();
-    core->ConfigureStream(1670);
-    return Napi::Number::New(env, core->StartStream());
+
+    if (auto locked_core = core.lock()) {
+        locked_core->ConfigureStream(1670);
+        return Napi::Number::New(env, locked_core->StartStream());
+    }
+
+    return env.Null();
 }
 Napi::Value gpu_viewport::StopStream(const Napi::CallbackInfo &info)
 {
     Napi::Env env = info.Env();
-    return Napi::Number::New(env, core->StopStream());
+    if (auto locked_core = core.lock()) 
+        return Napi::Number::New(env, locked_core->StopStream());
+    
+    return env.Null();
 };
 
 Napi::Value gpu_viewport::GetROI(const Napi::CallbackInfo& info) {
-    return ROIToJSObject(info.Env(), core->GetROI());
+    Napi::Env env = info.Env();
+
+    if (auto locked_core = core.lock()) 
+        return ROIToJSObject(info.Env(), locked_core->GetROI());
+
+    return env.Null();
 }
 
 Napi::Value gpu_viewport::SetROI(const Napi::CallbackInfo& info) {
@@ -206,11 +229,17 @@ Napi::Value gpu_viewport::SetROI(const Napi::CallbackInfo& info) {
     Napi::Object obj = info[0].As<Napi::Object>();
     vb::ROI roi = JSObjectToROI(obj);
 
-    return Napi::Number::New(env, core->SetROI(roi));
+    if (auto locked_core = core.lock()) 
+        return Napi::Number::New(env, locked_core->SetROI(roi));
+
+    return env.Null();
 }
 
 Napi::Value gpu_viewport::GetImageSize(const Napi::CallbackInfo& info) {
     Napi::Env env = info.Env();
 
-    return ROIToJSObject(info.Env(), core->GetImageSize());
+    if (auto locked_core = core.lock()) 
+        return ROIToJSObject(info.Env(), locked_core->GetImageSize());
+    
+    return env.Null();
 }

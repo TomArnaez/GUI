@@ -24,7 +24,7 @@ events:
       The output was:
       0
       MSBuild version 17.8.3+195e7f5a3 for .NET Framework
-      Build started 11/06/2024 12:34:33.
+      Build started 19/06/2024 09:14:44.
       
       Project "C:\\dev\\repos\\GUI\\gpu_viewport\\build\\CMakeFiles\\3.29.3\\CompilerIdC\\CompilerIdC.vcxproj" on node 1 (default targets).
       PrepareForBuild:
@@ -88,7 +88,7 @@ events:
       The output was:
       0
       MSBuild version 17.8.3+195e7f5a3 for .NET Framework
-      Build started 11/06/2024 12:34:33.
+      Build started 19/06/2024 09:14:45.
       
       Project "C:\\dev\\repos\\GUI\\gpu_viewport\\build\\CMakeFiles\\3.29.3\\CompilerIdCXX\\CompilerIdCXX.vcxproj" on node 1 (default targets).
       PrepareForBuild:
@@ -126,7 +126,7 @@ events:
           0 Warning(s)
           0 Error(s)
       
-      Time Elapsed 00:00:00.82
+      Time Elapsed 00:00:00.81
       
       
       Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.exe"
@@ -145,8 +145,8 @@ events:
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "C:/dev/repos/GUI/gpu_viewport/build/CMakeFiles/CMakeScratch/TryCompile-5bv06m"
-      binary: "C:/dev/repos/GUI/gpu_viewport/build/CMakeFiles/CMakeScratch/TryCompile-5bv06m"
+      source: "C:/dev/repos/GUI/gpu_viewport/build/CMakeFiles/CMakeScratch/TryCompile-7n5x4j"
+      binary: "C:/dev/repos/GUI/gpu_viewport/build/CMakeFiles/CMakeScratch/TryCompile-7n5x4j"
     cmakeVariables:
       CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
       CMAKE_C_FLAGS_DEBUG: "/Ob0 /Od /RTC1"
@@ -156,49 +156,49 @@ events:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: 'C:/dev/repos/GUI/gpu_viewport/build/CMakeFiles/CMakeScratch/TryCompile-5bv06m'
+        Change Dir: 'C:/dev/repos/GUI/gpu_viewport/build/CMakeFiles/CMakeScratch/TryCompile-7n5x4j'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_a73cc.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_99900.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         MSBuild version 17.8.3+195e7f5a3 for .NET Framework
-        Build started 11/06/2024 12:34:35.
+        Build started 19/06/2024 09:14:46.
         
-        Project "C:\\dev\\repos\\GUI\\gpu_viewport\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5bv06m\\cmTC_a73cc.vcxproj" on node 1 (default targets).
+        Project "C:\\dev\\repos\\GUI\\gpu_viewport\\build\\CMakeFiles\\CMakeScratch\\TryCompile-7n5x4j\\cmTC_99900.vcxproj" on node 1 (default targets).
         PrepareForBuild:
-          Creating directory "cmTC_a73cc.dir\\Debug\\".
+          Creating directory "cmTC_99900.dir\\Debug\\".
           Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
-          Creating directory "C:\\dev\\repos\\GUI\\gpu_viewport\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5bv06m\\Debug\\".
-          Creating directory "cmTC_a73cc.dir\\Debug\\cmTC_a73cc.tlog\\".
+          Creating directory "C:\\dev\\repos\\GUI\\gpu_viewport\\build\\CMakeFiles\\CMakeScratch\\TryCompile-7n5x4j\\Debug\\".
+          Creating directory "cmTC_99900.dir\\Debug\\cmTC_99900.tlog\\".
         InitializeBuildStatus:
-          Creating "cmTC_a73cc.dir\\Debug\\cmTC_a73cc.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
-          Touching "cmTC_a73cc.dir\\Debug\\cmTC_a73cc.tlog\\unsuccessfulbuild".
+          Creating "cmTC_99900.dir\\Debug\\cmTC_99900.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_99900.dir\\Debug\\cmTC_99900.tlog\\unsuccessfulbuild".
         VcpkgTripletSelection:
           Using triplet "x64-windows" from "C:\\dev\\tools\\vcpkg\\installed\\x64-windows\\"
           Using normalized configuration "Release"
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\CL.exe /c /I"C:\\dev\\tools\\vcpkg\\installed\\x64-windows\\include" /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_a73cc.dir\\Debug\\\\" /Fd"cmTC_a73cc.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.29\\Modules\\CMakeCCompilerABI.c"
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\CL.exe /c /I"C:\\dev\\tools\\vcpkg\\installed\\x64-windows\\include" /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_99900.dir\\Debug\\\\" /Fd"cmTC_99900.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.29\\Modules\\CMakeCCompilerABI.c"
           Microsoft (R) C/C++ Optimizing Compiler Version 19.38.33134 for x64
           Copyright (C) Microsoft Corporation.  All rights reserved.
-          cl /c /I"C:\\dev\\tools\\vcpkg\\installed\\x64-windows\\include" /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_a73cc.dir\\Debug\\\\" /Fd"cmTC_a73cc.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.29\\Modules\\CMakeCCompilerABI.c"
+          cl /c /I"C:\\dev\\tools\\vcpkg\\installed\\x64-windows\\include" /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_99900.dir\\Debug\\\\" /Fd"cmTC_99900.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.29\\Modules\\CMakeCCompilerABI.c"
           CMakeCCompilerABI.c
         Link:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\dev\\repos\\GUI\\gpu_viewport\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5bv06m\\Debug\\cmTC_a73cc.exe" /INCREMENTAL /ILK:"cmTC_a73cc.dir\\Debug\\cmTC_a73cc.ilk" /NOLOGO /LIBPATH:"C:\\dev\\tools\\vcpkg\\installed\\x64-windows\\lib" /LIBPATH:"C:\\dev\\tools\\vcpkg\\installed\\x64-windows\\lib\\manual-link" kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib "C:\\dev\\tools\\vcpkg\\installed\\x64-windows\\lib\\*.lib" /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/dev/repos/GUI/gpu_viewport/build/CMakeFiles/CMakeScratch/TryCompile-5bv06m/Debug/cmTC_a73cc.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/dev/repos/GUI/gpu_viewport/build/CMakeFiles/CMakeScratch/TryCompile-5bv06m/Debug/cmTC_a73cc.lib" /MACHINE:X64  /machine:x64 cmTC_a73cc.dir\\Debug\\CMakeCCompilerABI.obj
-          cmTC_a73cc.vcxproj -> C:\\dev\\repos\\GUI\\gpu_viewport\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5bv06m\\Debug\\cmTC_a73cc.exe
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\dev\\repos\\GUI\\gpu_viewport\\build\\CMakeFiles\\CMakeScratch\\TryCompile-7n5x4j\\Debug\\cmTC_99900.exe" /INCREMENTAL /ILK:"cmTC_99900.dir\\Debug\\cmTC_99900.ilk" /NOLOGO /LIBPATH:"C:\\dev\\tools\\vcpkg\\installed\\x64-windows\\lib" /LIBPATH:"C:\\dev\\tools\\vcpkg\\installed\\x64-windows\\lib\\manual-link" kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib "C:\\dev\\tools\\vcpkg\\installed\\x64-windows\\lib\\*.lib" /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/dev/repos/GUI/gpu_viewport/build/CMakeFiles/CMakeScratch/TryCompile-7n5x4j/Debug/cmTC_99900.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/dev/repos/GUI/gpu_viewport/build/CMakeFiles/CMakeScratch/TryCompile-7n5x4j/Debug/cmTC_99900.lib" /MACHINE:X64  /machine:x64 cmTC_99900.dir\\Debug\\CMakeCCompilerABI.obj
+          cmTC_99900.vcxproj -> C:\\dev\\repos\\GUI\\gpu_viewport\\build\\CMakeFiles\\CMakeScratch\\TryCompile-7n5x4j\\Debug\\cmTC_99900.exe
         AppLocalFromInstalled:
-          pwsh.exe -ExecutionPolicy Bypass -noprofile -File "C:\\dev\\tools\\vcpkg\\scripts\\buildsystems\\msbuild\\applocal.ps1" "C:\\dev\\repos\\GUI\\gpu_viewport\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5bv06m\\Debug\\cmTC_a73cc.exe" "C:\\dev\\tools\\vcpkg\\installed\\x64-windows\\bin" "cmTC_a73cc.dir\\Debug\\cmTC_a73cc.tlog\\cmTC_a73cc.write.1u.tlog" "cmTC_a73cc.dir\\Debug\\vcpkg.applocal.log"
+          pwsh.exe -ExecutionPolicy Bypass -noprofile -File "C:\\dev\\tools\\vcpkg\\scripts\\buildsystems\\msbuild\\applocal.ps1" "C:\\dev\\repos\\GUI\\gpu_viewport\\build\\CMakeFiles\\CMakeScratch\\TryCompile-7n5x4j\\Debug\\cmTC_99900.exe" "C:\\dev\\tools\\vcpkg\\installed\\x64-windows\\bin" "cmTC_99900.dir\\Debug\\cmTC_99900.tlog\\cmTC_99900.write.1u.tlog" "cmTC_99900.dir\\Debug\\vcpkg.applocal.log"
           'pwsh.exe' is not recognized as an internal or external command,
           operable program or batch file.
-          The command "pwsh.exe -ExecutionPolicy Bypass -noprofile -File "C:\\dev\\tools\\vcpkg\\scripts\\buildsystems\\msbuild\\applocal.ps1" "C:\\dev\\repos\\GUI\\gpu_viewport\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5bv06m\\Debug\\cmTC_a73cc.exe" "C:\\dev\\tools\\vcpkg\\installed\\x64-windows\\bin" "cmTC_a73cc.dir\\Debug\\cmTC_a73cc.tlog\\cmTC_a73cc.write.1u.tlog" "cmTC_a73cc.dir\\Debug\\vcpkg.applocal.log"" exited with code 9009.
-          "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -ExecutionPolicy Bypass -noprofile -File "C:\\dev\\tools\\vcpkg\\scripts\\buildsystems\\msbuild\\applocal.ps1" "C:\\dev\\repos\\GUI\\gpu_viewport\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5bv06m\\Debug\\cmTC_a73cc.exe" "C:\\dev\\tools\\vcpkg\\installed\\x64-windows\\bin" "cmTC_a73cc.dir\\Debug\\cmTC_a73cc.tlog\\cmTC_a73cc.write.1u.tlog" "cmTC_a73cc.dir\\Debug\\vcpkg.applocal.log"
+          The command "pwsh.exe -ExecutionPolicy Bypass -noprofile -File "C:\\dev\\tools\\vcpkg\\scripts\\buildsystems\\msbuild\\applocal.ps1" "C:\\dev\\repos\\GUI\\gpu_viewport\\build\\CMakeFiles\\CMakeScratch\\TryCompile-7n5x4j\\Debug\\cmTC_99900.exe" "C:\\dev\\tools\\vcpkg\\installed\\x64-windows\\bin" "cmTC_99900.dir\\Debug\\cmTC_99900.tlog\\cmTC_99900.write.1u.tlog" "cmTC_99900.dir\\Debug\\vcpkg.applocal.log"" exited with code 9009.
+          "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -ExecutionPolicy Bypass -noprofile -File "C:\\dev\\tools\\vcpkg\\scripts\\buildsystems\\msbuild\\applocal.ps1" "C:\\dev\\repos\\GUI\\gpu_viewport\\build\\CMakeFiles\\CMakeScratch\\TryCompile-7n5x4j\\Debug\\cmTC_99900.exe" "C:\\dev\\tools\\vcpkg\\installed\\x64-windows\\bin" "cmTC_99900.dir\\Debug\\cmTC_99900.tlog\\cmTC_99900.write.1u.tlog" "cmTC_99900.dir\\Debug\\vcpkg.applocal.log"
         FinalizeBuildStatus:
-          Deleting file "cmTC_a73cc.dir\\Debug\\cmTC_a73cc.tlog\\unsuccessfulbuild".
-          Touching "cmTC_a73cc.dir\\Debug\\cmTC_a73cc.tlog\\cmTC_a73cc.lastbuildstate".
-        Done Building Project "C:\\dev\\repos\\GUI\\gpu_viewport\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5bv06m\\cmTC_a73cc.vcxproj" (default targets).
+          Deleting file "cmTC_99900.dir\\Debug\\cmTC_99900.tlog\\unsuccessfulbuild".
+          Touching "cmTC_99900.dir\\Debug\\cmTC_99900.tlog\\cmTC_99900.lastbuildstate".
+        Done Building Project "C:\\dev\\repos\\GUI\\gpu_viewport\\build\\CMakeFiles\\CMakeScratch\\TryCompile-7n5x4j\\cmTC_99900.vcxproj" (default targets).
         
         Build succeeded.
             0 Warning(s)
             0 Error(s)
         
-        Time Elapsed 00:00:00.87
+        Time Elapsed 00:00:01.01
         
       exitCode: 0
   -
@@ -238,8 +238,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "C:/dev/repos/GUI/gpu_viewport/build/CMakeFiles/CMakeScratch/TryCompile-19dm9v"
-      binary: "C:/dev/repos/GUI/gpu_viewport/build/CMakeFiles/CMakeScratch/TryCompile-19dm9v"
+      source: "C:/dev/repos/GUI/gpu_viewport/build/CMakeFiles/CMakeScratch/TryCompile-fcnrw9"
+      binary: "C:/dev/repos/GUI/gpu_viewport/build/CMakeFiles/CMakeScratch/TryCompile-fcnrw9"
     cmakeVariables:
       CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /EHsc"
       CMAKE_CXX_FLAGS_DEBUG: "/Ob0 /Od /RTC1"
@@ -250,49 +250,49 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: 'C:/dev/repos/GUI/gpu_viewport/build/CMakeFiles/CMakeScratch/TryCompile-19dm9v'
+        Change Dir: 'C:/dev/repos/GUI/gpu_viewport/build/CMakeFiles/CMakeScratch/TryCompile-fcnrw9'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_e299a.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_0fb50.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         MSBuild version 17.8.3+195e7f5a3 for .NET Framework
-        Build started 11/06/2024 12:34:36.
+        Build started 19/06/2024 09:14:47.
         
-        Project "C:\\dev\\repos\\GUI\\gpu_viewport\\build\\CMakeFiles\\CMakeScratch\\TryCompile-19dm9v\\cmTC_e299a.vcxproj" on node 1 (default targets).
+        Project "C:\\dev\\repos\\GUI\\gpu_viewport\\build\\CMakeFiles\\CMakeScratch\\TryCompile-fcnrw9\\cmTC_0fb50.vcxproj" on node 1 (default targets).
         PrepareForBuild:
-          Creating directory "cmTC_e299a.dir\\Debug\\".
+          Creating directory "cmTC_0fb50.dir\\Debug\\".
           Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
-          Creating directory "C:\\dev\\repos\\GUI\\gpu_viewport\\build\\CMakeFiles\\CMakeScratch\\TryCompile-19dm9v\\Debug\\".
-          Creating directory "cmTC_e299a.dir\\Debug\\cmTC_e299a.tlog\\".
+          Creating directory "C:\\dev\\repos\\GUI\\gpu_viewport\\build\\CMakeFiles\\CMakeScratch\\TryCompile-fcnrw9\\Debug\\".
+          Creating directory "cmTC_0fb50.dir\\Debug\\cmTC_0fb50.tlog\\".
         InitializeBuildStatus:
-          Creating "cmTC_e299a.dir\\Debug\\cmTC_e299a.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
-          Touching "cmTC_e299a.dir\\Debug\\cmTC_e299a.tlog\\unsuccessfulbuild".
+          Creating "cmTC_0fb50.dir\\Debug\\cmTC_0fb50.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_0fb50.dir\\Debug\\cmTC_0fb50.tlog\\unsuccessfulbuild".
         VcpkgTripletSelection:
           Using triplet "x64-windows" from "C:\\dev\\tools\\vcpkg\\installed\\x64-windows\\"
           Using normalized configuration "Release"
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\CL.exe /c /I"C:\\dev\\tools\\vcpkg\\installed\\x64-windows\\include" /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_e299a.dir\\Debug\\\\" /Fd"cmTC_e299a.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.29\\Modules\\CMakeCXXCompilerABI.cpp"
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\CL.exe /c /I"C:\\dev\\tools\\vcpkg\\installed\\x64-windows\\include" /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_0fb50.dir\\Debug\\\\" /Fd"cmTC_0fb50.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.29\\Modules\\CMakeCXXCompilerABI.cpp"
           Microsoft (R) C/C++ Optimizing Compiler Version 19.38.33134 for x64
           Copyright (C) Microsoft Corporation.  All rights reserved.
-          cl /c /I"C:\\dev\\tools\\vcpkg\\installed\\x64-windows\\include" /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_e299a.dir\\Debug\\\\" /Fd"cmTC_e299a.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.29\\Modules\\CMakeCXXCompilerABI.cpp"
+          cl /c /I"C:\\dev\\tools\\vcpkg\\installed\\x64-windows\\include" /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_0fb50.dir\\Debug\\\\" /Fd"cmTC_0fb50.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.29\\Modules\\CMakeCXXCompilerABI.cpp"
           CMakeCXXCompilerABI.cpp
         Link:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\dev\\repos\\GUI\\gpu_viewport\\build\\CMakeFiles\\CMakeScratch\\TryCompile-19dm9v\\Debug\\cmTC_e299a.exe" /INCREMENTAL /ILK:"cmTC_e299a.dir\\Debug\\cmTC_e299a.ilk" /NOLOGO /LIBPATH:"C:\\dev\\tools\\vcpkg\\installed\\x64-windows\\lib" /LIBPATH:"C:\\dev\\tools\\vcpkg\\installed\\x64-windows\\lib\\manual-link" kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib "C:\\dev\\tools\\vcpkg\\installed\\x64-windows\\lib\\*.lib" /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/dev/repos/GUI/gpu_viewport/build/CMakeFiles/CMakeScratch/TryCompile-19dm9v/Debug/cmTC_e299a.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/dev/repos/GUI/gpu_viewport/build/CMakeFiles/CMakeScratch/TryCompile-19dm9v/Debug/cmTC_e299a.lib" /MACHINE:X64  /machine:x64 cmTC_e299a.dir\\Debug\\CMakeCXXCompilerABI.obj
-          cmTC_e299a.vcxproj -> C:\\dev\\repos\\GUI\\gpu_viewport\\build\\CMakeFiles\\CMakeScratch\\TryCompile-19dm9v\\Debug\\cmTC_e299a.exe
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\dev\\repos\\GUI\\gpu_viewport\\build\\CMakeFiles\\CMakeScratch\\TryCompile-fcnrw9\\Debug\\cmTC_0fb50.exe" /INCREMENTAL /ILK:"cmTC_0fb50.dir\\Debug\\cmTC_0fb50.ilk" /NOLOGO /LIBPATH:"C:\\dev\\tools\\vcpkg\\installed\\x64-windows\\lib" /LIBPATH:"C:\\dev\\tools\\vcpkg\\installed\\x64-windows\\lib\\manual-link" kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib "C:\\dev\\tools\\vcpkg\\installed\\x64-windows\\lib\\*.lib" /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/dev/repos/GUI/gpu_viewport/build/CMakeFiles/CMakeScratch/TryCompile-fcnrw9/Debug/cmTC_0fb50.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/dev/repos/GUI/gpu_viewport/build/CMakeFiles/CMakeScratch/TryCompile-fcnrw9/Debug/cmTC_0fb50.lib" /MACHINE:X64  /machine:x64 cmTC_0fb50.dir\\Debug\\CMakeCXXCompilerABI.obj
+          cmTC_0fb50.vcxproj -> C:\\dev\\repos\\GUI\\gpu_viewport\\build\\CMakeFiles\\CMakeScratch\\TryCompile-fcnrw9\\Debug\\cmTC_0fb50.exe
         AppLocalFromInstalled:
-          pwsh.exe -ExecutionPolicy Bypass -noprofile -File "C:\\dev\\tools\\vcpkg\\scripts\\buildsystems\\msbuild\\applocal.ps1" "C:\\dev\\repos\\GUI\\gpu_viewport\\build\\CMakeFiles\\CMakeScratch\\TryCompile-19dm9v\\Debug\\cmTC_e299a.exe" "C:\\dev\\tools\\vcpkg\\installed\\x64-windows\\bin" "cmTC_e299a.dir\\Debug\\cmTC_e299a.tlog\\cmTC_e299a.write.1u.tlog" "cmTC_e299a.dir\\Debug\\vcpkg.applocal.log"
+          pwsh.exe -ExecutionPolicy Bypass -noprofile -File "C:\\dev\\tools\\vcpkg\\scripts\\buildsystems\\msbuild\\applocal.ps1" "C:\\dev\\repos\\GUI\\gpu_viewport\\build\\CMakeFiles\\CMakeScratch\\TryCompile-fcnrw9\\Debug\\cmTC_0fb50.exe" "C:\\dev\\tools\\vcpkg\\installed\\x64-windows\\bin" "cmTC_0fb50.dir\\Debug\\cmTC_0fb50.tlog\\cmTC_0fb50.write.1u.tlog" "cmTC_0fb50.dir\\Debug\\vcpkg.applocal.log"
           'pwsh.exe' is not recognized as an internal or external command,
           operable program or batch file.
-          The command "pwsh.exe -ExecutionPolicy Bypass -noprofile -File "C:\\dev\\tools\\vcpkg\\scripts\\buildsystems\\msbuild\\applocal.ps1" "C:\\dev\\repos\\GUI\\gpu_viewport\\build\\CMakeFiles\\CMakeScratch\\TryCompile-19dm9v\\Debug\\cmTC_e299a.exe" "C:\\dev\\tools\\vcpkg\\installed\\x64-windows\\bin" "cmTC_e299a.dir\\Debug\\cmTC_e299a.tlog\\cmTC_e299a.write.1u.tlog" "cmTC_e299a.dir\\Debug\\vcpkg.applocal.log"" exited with code 9009.
-          "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -ExecutionPolicy Bypass -noprofile -File "C:\\dev\\tools\\vcpkg\\scripts\\buildsystems\\msbuild\\applocal.ps1" "C:\\dev\\repos\\GUI\\gpu_viewport\\build\\CMakeFiles\\CMakeScratch\\TryCompile-19dm9v\\Debug\\cmTC_e299a.exe" "C:\\dev\\tools\\vcpkg\\installed\\x64-windows\\bin" "cmTC_e299a.dir\\Debug\\cmTC_e299a.tlog\\cmTC_e299a.write.1u.tlog" "cmTC_e299a.dir\\Debug\\vcpkg.applocal.log"
+          The command "pwsh.exe -ExecutionPolicy Bypass -noprofile -File "C:\\dev\\tools\\vcpkg\\scripts\\buildsystems\\msbuild\\applocal.ps1" "C:\\dev\\repos\\GUI\\gpu_viewport\\build\\CMakeFiles\\CMakeScratch\\TryCompile-fcnrw9\\Debug\\cmTC_0fb50.exe" "C:\\dev\\tools\\vcpkg\\installed\\x64-windows\\bin" "cmTC_0fb50.dir\\Debug\\cmTC_0fb50.tlog\\cmTC_0fb50.write.1u.tlog" "cmTC_0fb50.dir\\Debug\\vcpkg.applocal.log"" exited with code 9009.
+          "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -ExecutionPolicy Bypass -noprofile -File "C:\\dev\\tools\\vcpkg\\scripts\\buildsystems\\msbuild\\applocal.ps1" "C:\\dev\\repos\\GUI\\gpu_viewport\\build\\CMakeFiles\\CMakeScratch\\TryCompile-fcnrw9\\Debug\\cmTC_0fb50.exe" "C:\\dev\\tools\\vcpkg\\installed\\x64-windows\\bin" "cmTC_0fb50.dir\\Debug\\cmTC_0fb50.tlog\\cmTC_0fb50.write.1u.tlog" "cmTC_0fb50.dir\\Debug\\vcpkg.applocal.log"
         FinalizeBuildStatus:
-          Deleting file "cmTC_e299a.dir\\Debug\\cmTC_e299a.tlog\\unsuccessfulbuild".
-          Touching "cmTC_e299a.dir\\Debug\\cmTC_e299a.tlog\\cmTC_e299a.lastbuildstate".
-        Done Building Project "C:\\dev\\repos\\GUI\\gpu_viewport\\build\\CMakeFiles\\CMakeScratch\\TryCompile-19dm9v\\cmTC_e299a.vcxproj" (default targets).
+          Deleting file "cmTC_0fb50.dir\\Debug\\cmTC_0fb50.tlog\\unsuccessfulbuild".
+          Touching "cmTC_0fb50.dir\\Debug\\cmTC_0fb50.tlog\\cmTC_0fb50.lastbuildstate".
+        Done Building Project "C:\\dev\\repos\\GUI\\gpu_viewport\\build\\CMakeFiles\\CMakeScratch\\TryCompile-fcnrw9\\cmTC_0fb50.vcxproj" (default targets).
         
         Build succeeded.
             0 Warning(s)
             0 Error(s)
         
-        Time Elapsed 00:00:00.87
+        Time Elapsed 00:00:00.84
         
       exitCode: 0
   -

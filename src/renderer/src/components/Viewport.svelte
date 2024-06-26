@@ -8,7 +8,6 @@
     height: number
   }
 
-  export let panFactor = 1.5
   export let zoomFactor = 0.1
 
   let resizeObserver: ResizeObserver | null = null
@@ -48,8 +47,8 @@
 
       let newRoi = {
         ...roi,
-        x: roi.x - deltaX * panFactor,
-        y: roi.y - deltaY * panFactor
+        x: roi.x - deltaX,
+        y: roi.y - deltaY
       }
 
       newRoi.x = Math.max(0, Math.min(newRoi.x, imageSize.width - roi.width))
